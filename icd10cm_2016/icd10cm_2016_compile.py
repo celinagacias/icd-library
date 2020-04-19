@@ -7,6 +7,9 @@ import json
 client_id = "**"
 client_secret = "**"
 
+
+### Set data to post
+
 def authenticate(
 	client_id, 
 	client_secret, 
@@ -14,10 +17,6 @@ def authenticate(
 	scope='icdapi_access',
 	grant_type='client_credentials'
 	):
-	"""
-	Set data to post
-	"""
-
  	payload = {'client_id': client_id, 
  			   'client_secret': client_secret, 
 		 	   'scope': scope, 
@@ -25,12 +24,14 @@ def authenticate(
  	r = requests.post(token_endpoint, data=payload, verify=True).json()
  	token = r['access_token']
  	headers = {'Authorization': 'Bearer '+token,
- 	'Accept': 'application/json', 
- 	'Accept-Language': 'en',
- 	'API-Version': 'v2'}
+		 	   'Accept': 'application/json', 
+		 	   'Accept-Language': 'en',
+		 	   'API-Version': 'v2'}
  	return(headers)
 
-#Parsing helper functions
+
+### Parsing helper functions
+
 def request_json(uri):
 	"""
 	Obtain the JSON from a given URI
@@ -112,6 +113,9 @@ def chapter_parser(chapter_uri):
 	code_df = pd.DataFrame(code_dump)
 	return(chapter_df, code_df)
 
+
+### Compile the chapters and codes 
+
 def generate_codes():
 	"""
 	Loop through the chapters and obtain all
@@ -125,7 +129,6 @@ def generate_codes():
 	all_chapters = []
 	all_codes = []
 
-	#Loop through each of the chapters
 	for chapter_uri in r10_top['child']:
 	  try:
 	    chapter_info, code_list = chapter_parser(chapter_uri)
