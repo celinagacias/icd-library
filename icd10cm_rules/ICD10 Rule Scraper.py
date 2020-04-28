@@ -104,7 +104,7 @@ rule_urls = {'newborn': 'https://www.icd10data.com/ICD10CM/Codes/Rules/Newborn_C
             'questionable': 'https://www.icd10data.com/ICD10CM/Codes/Rules/Questionable_Dx_Codes'}
 
 
-# In[222]:
+# In[ ]:
 
 
 rules = []
@@ -115,15 +115,15 @@ for rule in rule_urls.keys():
     rules.append(rule_codes)
 
 
-# In[225]:
+# In[ ]:
 
 
 #Export as .csv
 rules = pd.concat(rules)
-rules.to_csv('icd10cm_rules.csv')
+rules.to_csv('icd10cm_rules.csv', index=False)
 
 
-# In[226]:
+# In[ ]:
 
 
 #Parse into format (Optional)
@@ -133,6 +133,8 @@ rules['agemax'] = np.nan
 rules['accpdx'] = np.nan
 
     #Set age rules
+rules.loc[rules['rule'] == 'maternity', 'agemin'] = 9
+rules.loc[rules['rule'] == 'maternity', 'agemax'] = 60
 rules.loc[rules['rule'] == 'newborn', 'agemax'] = 0
 rules.loc[rules['rule'] == 'pediatric', 'agemax'] = 17
 rules.loc[rules['rule'] == 'adult', 'agemin'] = 15
@@ -154,4 +156,12 @@ rules.loc[rules.accpdx.isnull(), 'accpdx'] = 'Y'
 rules.loc[rules.agemin.isnull(), 'agemin'] = 0
 rules.loc[rules.agemax.isnull(), 'agemax'] = 124
 rules.loc[rules.sex.isnull(), 'sex'] = 'B'
+
+rules.to_csv('icd10cm_rules_table.csv')
+
+
+# In[ ]:
+
+
+
 
