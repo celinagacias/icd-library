@@ -1,13 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[76]:
-
 
 import pandas as pd
 import numpy as np
 import time
-from bs4 import BeautifulSoup
 
 #Load selenium
 from selenium import webdriver
@@ -15,9 +12,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-
-
-# In[183]:
 
 
 def page_parser():
@@ -36,10 +30,6 @@ def page_parser():
     rule_codes['rule'] = rule
     time.sleep(2)
     return(rule_codes)
-
-
-# In[184]:
-
 
 def rule_parser(rule):
     """
@@ -91,9 +81,6 @@ def rule_parser(rule):
     return(pd.concat(rule_list))
 
 
-# In[ ]:
-
-
 #URLs to Scrape
 rule_urls = {'newborn': 'https://www.icd10data.com/ICD10CM/Codes/Rules/Newborn_Codes',
             'pediatric': 'https://www.icd10data.com/ICD10CM/Codes/Rules/Pediatric_Codes',
@@ -104,9 +91,6 @@ rule_urls = {'newborn': 'https://www.icd10data.com/ICD10CM/Codes/Rules/Newborn_C
             'questionable': 'https://www.icd10data.com/ICD10CM/Codes/Rules/Questionable_Dx_Codes'}
 
 
-# In[ ]:
-
-
 rules = []
 wd = webdriver.Chrome('chromedriver.exe')
 
@@ -115,15 +99,9 @@ for rule in rule_urls.keys():
     rules.append(rule_codes)
 
 
-# In[ ]:
-
-
 #Export as .csv
 rules = pd.concat(rules)
 rules.to_csv('icd10cm_rules.csv', index=False)
-
-
-# In[ ]:
 
 
 #Parse into format (Optional)
@@ -158,10 +136,3 @@ rules.loc[rules.agemax.isnull(), 'agemax'] = 124
 rules.loc[rules.sex.isnull(), 'sex'] = 'B'
 
 rules.to_csv('icd10cm_rules_table.csv')
-
-
-# In[ ]:
-
-
-
-
