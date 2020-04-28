@@ -1,4 +1,4 @@
-This is a table of rules on ICD-10-CM codes, as obtained from icd10data.com.
+This is a table of rules on ICD-10-CM codes, as obtained from [icd10data.com](icd10data.com).
 
 This contains the following libraries:
 1. Newborn codes - Codes only for patients at age of at most 0 years
